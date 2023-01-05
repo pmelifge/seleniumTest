@@ -1,0 +1,42 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Main {
+  public static void main(String[] args) {
+    // Chrome tarayıcısını kullanarak web sayfasına gidin
+    WebDriver driver = new ChromeDriver();
+    driver.get("https://the-internet.herokuapp.com/iframe");
+
+    // Toplam iframe sayısını bulun
+    int frameCount = driver.findElements(By.tagName("iframe")).size();
+    System.out.println("Toplam iframe sayısı: " + frameCount);
+
+    // Sayfa başlığında 'Editor' yazının olup olmadığını test edin
+    String title = driver.getTitle();
+    if (title.contains("Editor")) {
+      System.out.println("Başlıkta 'Editor' yazısı var!");
+    } else {
+      System.out.println("Başlıkta 'Editor' yazısı yok!");
+    }
+
+    // İlk iframe'e gidin ve içeriğini değiştirin
+    driver.switchTo().frame(0);
+    WebElement p = driver.findElement(By.tagName("p"));
+    p.clear();
+    p.sendKeys("iframe'in içindeyim");
+
+    // Alt kısımdaki yazının 'Elemental Selenium' yazısını içerip içermediğini test edin
+    driver.switchTo().defaultContent();
+    WebElement footer = driver.findElement(By.cssSelector("#page-footer"));
+    if (footer.getText().contains("Elemental Selenium")) {
+      System.out.println("Alt kısımda 'Elemental Selenium' yazısı var!");
+    } else {
+      System.out.println("Alt kısımda 'Elemental Selenium' yazısı yok!");
+    }
+
+    // Tarayıcıyı kapatın
+    driver.quit();
+  }
+}
