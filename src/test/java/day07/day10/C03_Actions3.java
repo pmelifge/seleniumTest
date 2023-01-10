@@ -1,4 +1,4 @@
-package day10;
+package day07.day10;
 import org.junit.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
